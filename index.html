@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💗 Love you 💗</title>
+    <style>
+        /* General page layout settings */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+        }
+
+        canvas {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #pinkboard {
+            z-index: 1;
+        }
+
+        #canvas {
+            z-index: 2;
+            pointer-events: none; /* Allows clicks to pass through text canvas */
+        }
+
+        /* Styling for the music selection button */
+        #music-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 999;
+            background: rgba(234, 128, 176, 0.8);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            font-size: 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: 0.3s;
+        }
+
+        #music-btn:hover {
+            background: rgb(234, 128, 176);
+            transform: scale(1.05);
+        }
+
+        /* Styling for the music playlist modal container */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        /* Modal content box styling */
+        .modal-content {
+            background: #1a1a1a;
+            color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(234, 128, 176, 0.4);
+            text-align: center;
+            border: 1px solid #ea80b0;
+        }
+
+        .modal-content h3 {
+            color: #ea80b0;
+            margin-top: 0;
+        }
+
+        /* Close button (X) styling */
+        #close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #close-modal:hover {
+            color: #ea80b0;
+        }
+
+        /* Playlist list styling */
+        #playlist {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+
+        #playlist li {
+            padding: 10px;
+            margin: 8px 0;
+            background: #2a2a2a;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+
+        #playlist li:hover {
+            background: #ea80b0;
+            color: #000;
+            border-color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background music audio element -->
+    <audio autoplay loop id="bg-music">
+        <source src="in-the-shadow-of-the-sun.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Button to open the music playlist -->
+    <button id="music-btn" title="Choose music">🎵 Choose Music</button>
+
+    <!-- Music playlist modal -->
+    <div id="music-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-modal">&times;</span>
+            <h3>✨ Music Playlist ✨</h3>
+            <ul id="playlist">
+                <!-- Add your tracks here (data-src specifies the music file path) -->
+                <li data-src="in-the-shadow-of-the-sun.mp3">💖 In The Shadow Of The Sun</li>
+                <li data-src="nhac_so_2.mp3">🎵 Romantic Song 2</li>
+                <li data-src="nhac_so_3.mp3">🎶 Sweet Melody 3</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Canvases for animations -->
+    <canvas id="pinkboard"></canvas>
+    <canvas id="canvas"></canvas>
+
+    <!-- External JavaScript file reference -->
+    <script src="script.js"></script>
+</body>
+</html>
