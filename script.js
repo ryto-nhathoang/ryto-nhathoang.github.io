@@ -1,15 +1,25 @@
 /*
- * Cấu hình chung cho hiệu ứng trái tim phác thảo (pinkboard)
+ * General configuration for the outline heart effect (pinkboard)
  */
 var settings = {
   particles: {
-    length: 500, // số lượng hạt tối đa
-    duration: 2, // thời gian tồn tại của hạt (giây)
-    velocity: 100, // tốc độ hạt (pixels/sec)
-    effect: -0.75, // hiệu ứng chuyển động
-    size: 30, // kích thước hạt (pixels)
+    length: 500, // Maximum amount of particles
+    duration: 2, // Particle duration in seconds
+    velocity: 100, // Particle velocity in pixels/sec
+    effect: -0.75, // Motion effect coefficient
+    size: 30, // Particle size in pixels
   },
 };
+
+// Automatically play background music when the user interacts with the page (click/touch)
+document.addEventListener('click', function() {
+    var audio = document.getElementById('bg-music');
+    if (audio && audio.paused) {
+        audio.play().catch(function(error) {
+            console.log("Unable to play audio: ", error);
+        });
+    }
+}, { once: true }); // Run only on the first click
 
 /*
  * RequestAnimationFrame polyfill
@@ -167,7 +177,7 @@ var ParticlePool = (function () {
 })();
 
 /*
- * Xử lý hiệu ứng trái tim chính (Pinkboard)
+ * Main heart effect handler (Pinkboard)
  */
 (function (canvas) {
   var context = canvas.getContext("2d"),
@@ -256,7 +266,7 @@ var ParticlePool = (function () {
 
 
 /*
- * Xử lý hiệu ứng chữ "i love you" bay lơ lửng & đã sửa lỗi nhòe màn hình khi resize
+ * Floating "i love you" text effect handler & fixed canvas blur issue on resize
  */
 const colors = [
   "#eec996", "#8fb7d3", "#b7d4c6", "#c3bedd", "#f1d5e4",
@@ -334,10 +344,49 @@ function renderTextCanvas() {
 
 initTextCanvas();
 
-// Lắng nghe sự kiện thay đổi kích thước cửa sổ để cập nhật lại canvas chuẩn xác, không bị nhòe
+// Listen to window resize event to accurately update canvas dimensions and prevent blur
 window.addEventListener("resize", function () {
   ww = window.innerWidth;
   wh = window.innerHeight;
   canvasText.width = ww;
   canvasText.height = wh;
+});
+
+
+/*
+ * Music playlist modal controller and track selection handler
+ */
+const musicBtn = document.getElementById("music-btn");
+const musicModal = document.getElementById("music-modal");
+const closeModal = document.getElementById("close-modal");
+const playlistItems = document.querySelectorAll("#playlist li");
+const audioPlayer = document.getElementById("bg-music");
+
+// Open music playlist modal when clicking the button
+musicBtn.addEventListener("click", function () {
+  musicModal.style.display = "block";
+});
+
+// Close music playlist modal when clicking the close (X) button
+closeModal.addEventListener("click", function () {
+  musicModal.style.display = "none";
+});
+
+// Close modal when clicking outside the modal content area
+window.addEventListener("click", function (event) {
+  if (event.target == musicModal) {
+    musicModal.style.display = "none";
+  }
+});
+
+// Select and play a track from the playlist
+playlistItems.forEach(function (item) {
+  item.addEventListener("click", function () {
+    const src = this.getAttribute("data-src");
+    audioPlayer.src = src;
+    audioPlayer.play().catch(function(error) {
+        console.log("Unable to play audio: ", error);
+    });
+    musicModal.style.display = "none"; // Close modal after selection
+  });
 });
