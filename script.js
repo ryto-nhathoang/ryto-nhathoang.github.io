@@ -389,4 +389,8 @@ playlistItems.forEach(function (item) {
     });
     musicModal.style.display = "none"; // Close modal after selection
   });
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> edaec9ca3e09e9cc41fcdb1e7bb8d9421543118f
