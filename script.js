@@ -389,3 +389,4 @@ playlistItems.forEach(function (item) {
     });
     musicModal.style.display = "none"; // Close modal after selection
   });
+});
